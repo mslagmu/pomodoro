@@ -14,9 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    taskslist.cpp
+    taskslist.cpp \
+    chrono.cpp
 
 HEADERS  += mainwindow.h \
-    taskslist.h
+    taskslist.h \
+    chrono.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    chrono.ui
+
+RESOURCES += \
+    resources.qrc

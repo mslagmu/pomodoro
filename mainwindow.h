@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include <QSettings>
+#include "chrono.h"
 
 namespace Ui {
 class MainWindow;
@@ -25,6 +27,11 @@ private slots:
     void on_stop_clicked();
     void on_skip_clicked();
     void on_reset_clicked();
+    void on_saveconfig_clicked();
+    void on_workTime_valueChanged(int v);
+    void on_longTime_valueChanged(int v);
+    void on_shortTime_valueChanged(int v);
+    void on_cycle_valueChanged(int v);
     void on_tray_activated ( QSystemTrayIcon::ActivationReason reason );
 
 
@@ -37,6 +44,9 @@ private:
     int step;
     QStringList stepsNames;
     QSystemTrayIcon tray;
+    QSettings config;
+    void saveConfig();
+    Chrono chrono;
 
 };
 
