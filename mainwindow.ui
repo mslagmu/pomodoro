@@ -38,7 +38,10 @@
            </font>
           </property>
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;25:00&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>00:00</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -51,6 +54,9 @@
           </property>
           <property name="text">
            <string>inactif</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -122,6 +128,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="workColor">
+            <property name="text">
+             <string>choisir la couleur</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -143,6 +156,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="shortColor">
+            <property name="text">
+             <string>choisir la couleur</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </item>
         <item>
@@ -161,6 +181,13 @@
             </property>
             <property name="value">
              <number>0</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="longColor">
+            <property name="text">
+             <string>choisir la couleur</string>
             </property>
            </widget>
           </item>

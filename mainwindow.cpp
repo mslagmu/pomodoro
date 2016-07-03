@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QResource>
 #include <QCloseEvent>
+#include <QTextStream>
+#include <QColorDialog>
 #include "constants.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -19,6 +21,13 @@ MainWindow::MainWindow(QWidget *parent) :
    ui->shortTime->setValue(config.value("shorttime",5).toInt());
    ui->longTime->setValue(config.value("longtime",15).toInt());
    ui->cycle->setValue(config.value("cycle",4).toInt());
+
+   colorNames[STOPED] = "white";
+   changeColorButton(ui->workColor,WORK,config.value("workColor","red").toString());
+   changeColorButton(ui->shortColor,SHORT,config.value("shortColor","yellow").toString());
+   changeColorButton(ui->longColor,LONG,config.value("longColor","green").toString());
+
+   //colorName[WORK]   = config.value("shorttime",5)
 
    tray.setIcon(QIcon(":/images/logo.png"));
 
@@ -44,7 +53,7 @@ void MainWindow::on_start_clicked() {
 
 void MainWindow::setStep(int s) {
     step=s;
-    chrono.setStep(step);
+    chrono.setStep(step,colorNames[s]);
 }
 
 void MainWindow::nextStep(){
@@ -80,6 +89,33 @@ void MainWindow::on_skip_clicked() {
     nextStep();
 }
 
+
+
+void MainWindow::changeColorButton(QPushButton * b,int step, QString  name) {
+    b->setStyleSheet(QString("background-color:%1").arg(name));
+    colorNames[step] = name;
+}
+
+void MainWindow::on_workColor_clicked() {
+    QColor color = QColorDialog::getColor(Qt::white, this, "Choisir la couleur.");
+    if ( ! color.isValid())  return ;
+    changeColorButton(ui->workColor,WORK,color.name());
+
+}
+
+void MainWindow::on_shortColor_clicked() {
+    QColor color = QColorDialog::getColor(Qt::white, this, "Choisir la couleur.");
+    if ( ! color.isValid())  return ;
+    changeColorButton(ui->shortColor,SHORT,color.name());
+}
+
+void MainWindow::on_longColor_clicked() {
+    QColor color = QColorDialog::getColor(Qt::white, this, "Choisir la couleur.");
+    if ( ! color.isValid())  return ;
+    changeColorButton(ui->longColor,LONG,color.name());
+
+
+}
 void MainWindow::on_tray_activated ( QSystemTrayIcon::ActivationReason reason ){
     this->setVisible(!this->isVisible());
 }
@@ -122,6 +158,9 @@ void MainWindow::saveConfig(){
     config.setValue("longtime",ui->longTime->value());
     config.setValue("shorttime",ui->shortTime->value());
     config.setValue("cycle",ui->cycle->value());
+    config.setValue("workcolor",colorNames[WORK]);
+    config.setValue("longcolor",colorNames[LONG]);
+    config.setValue("short",colorNames[SHORT]);
 }
 
 
@@ -131,16 +170,16 @@ void MainWindow::closeEvent(QCloseEvent * event){
 }
 
 void MainWindow::displayTime(){
-    QString t;
-    t = QString("<html><head/><body><p align=\"center\">%1:%2</p></body></html>").arg(minutes,2).arg(secondes,2);
+    QString time;
+    QTextStream(&time) << "" << qSetFieldWidth(2) << right << qSetPadChar('0') << minutes << qSetFieldWidth(1) << ":" << qSetFieldWidth(2) <<  secondes ;
     this->setWindowTitle(QString("%3 %1:%2").arg(minutes,2).arg(secondes,2).arg(stepsNames[step]));
-    ui->clock->setText(t);
-    chrono.setTime(minutes,secondes);
+    ui->clock->setText(time);
+    chrono.setTime(time);
 }
 
 void MainWindow::on_showPopup_stateChanged(int state){
     chrono.set_visible(state==2);
-    chrono.setStep(step);
+    chrono.setStep(step,colorNames[step]);
 }
 
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include <QSettings>
+#include <QPushButton>
 #include "chrono.h"
 
 namespace Ui {
@@ -28,6 +29,11 @@ private slots:
     void on_stop_clicked();
     void on_skip_clicked();
     void on_reset_clicked();
+
+    void on_workColor_clicked();
+    void on_shortColor_clicked();
+    void on_longColor_clicked();
+
     void on_saveconfig_clicked();
     void on_workTime_valueChanged(int v);
     void on_longTime_valueChanged(int v);
@@ -45,8 +51,10 @@ private:
     int timer;
     int step;
     QStringList stepsNames;
+    QString colorNames[4]={ "","","",""};
     QSystemTrayIcon tray;
     QSettings config;
+    void changeColorButton(QPushButton * b, int step, QString name);
     void saveConfig();
     void setStep(int s);
     void displayTime();

@@ -19,8 +19,8 @@ public:
     explicit Chrono(QWidget *Owner,QWidget *parent = 0);
     ~Chrono();
 
-    void setTime(int m, int s);
-    void setStep(int s);
+    void setTime(QString t);
+    void setStep(int s,QString color);
     void set_visible(bool v);
 
 private:
