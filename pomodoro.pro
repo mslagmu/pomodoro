@@ -19,7 +19,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     taskslist.h \
-    chrono.h
+    chrono.h \
+    constants.h
 
 FORMS    += mainwindow.ui \
     chrono.ui

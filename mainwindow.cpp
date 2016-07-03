@@ -2,19 +2,12 @@
 #include "ui_mainwindow.h"
 #include <QDebug>
 #include <QResource>
-
-#define STOPED  0
-#define WORK  1
-#define SHORT  2
-#define LONG  3
-
-
-
-
+#include <QCloseEvent>
+#include "constants.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono()
+    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this)
 {
    //QResource::registerResource("resource.rcc");
 
@@ -32,11 +25,13 @@ MainWindow::MainWindow(QWidget *parent) :
    setWindowIcon(QIcon(":/images/logo.png"));
    //setWindowFlags(Qt::FramelessWindowHint);
 
-   tray.show();
+   tray.setContextMenu(0);
+
+   //tray.show();
    on_reset_clicked();
 
-   chrono.show();
-   chrono.setGeometry(1000,0,100,100);
+
+   chrono.setGeometry(1000,0,84,30);
 
 }
 
@@ -47,28 +42,33 @@ void MainWindow::on_start_clicked() {
     timer = startTimer(1000);
 }
 
+void MainWindow::setStep(int s) {
+    step=s;
+    chrono.setStep(step);
+}
 
 void MainWindow::nextStep(){
     int s = step;
     if ( s == STOPED ) {
-        step=WORK;
+        setStep(WORK);
     }
     if ( s == WORK  && nbcycle < cycle ) {
-        step = SHORT;
+        setStep(SHORT);
         nbcycle += 1;
     }
 
     if ( s == WORK  && nbcycle == cycle ) {
-        step = LONG;
+        setStep(LONG);
         nbcycle = 0;
     }
 
-    if ( s==LONG || s == SHORT ) step = WORK;
+    if ( s==LONG || s == SHORT ) setStep(WORK);
 
     secondes = 60;
     minutes = stepTime[step]-1;
     ui->step->setText(QString("<html><head/><body><p align=\"center\">%1</p></body></html>").arg(stepsNames[step]));
-    tray.showMessage("Changement",stepsNames[step]);
+    //tray.showMessage("Changement",stepsNames[step]);
+
 }
 
 
@@ -81,13 +81,16 @@ void MainWindow::on_skip_clicked() {
 }
 
 void MainWindow::on_tray_activated ( QSystemTrayIcon::ActivationReason reason ){
-    this->setVisible(this->isVisible());
+    this->setVisible(!this->isVisible());
 }
 
 void MainWindow::on_reset_clicked() {
     stepTime[STOPED] = 0;
     nbcycle = 0;
-    step = STOPED;
+    minutes = stepTime[WORK];
+    secondes = 0;
+    setStep(STOPED);
+    displayTime();
     ui->step->setText(QString("<html><head/><body><p align=\"center\">%1</p></body></html>").arg(stepsNames[step]));
     killTimer(timer);
 
@@ -122,17 +125,36 @@ void MainWindow::saveConfig(){
 }
 
 
-void MainWindow::timerEvent(QTimerEvent *event){
+void MainWindow::closeEvent(QCloseEvent * event){
+    chrono.hide();
+    event->accept();
+}
+
+void MainWindow::displayTime(){
     QString t;
+    t = QString("<html><head/><body><p align=\"center\">%1:%2</p></body></html>").arg(minutes,2).arg(secondes,2);
+    this->setWindowTitle(QString("%3 %1:%2").arg(minutes,2).arg(secondes,2).arg(stepsNames[step]));
+    ui->clock->setText(t);
+    chrono.setTime(minutes,secondes);
+}
+
+void MainWindow::on_showPopup_stateChanged(int state){
+    chrono.set_visible(state==2);
+    chrono.setStep(step);
+}
+
+
+
+void MainWindow::timerEvent(QTimerEvent *event){
+
     secondes = secondes-1;
     if (secondes < 0) {
         minutes= minutes-1;
         secondes = 59;
     }
     if (minutes ==0 && secondes==0) nextStep();
-    t = QString("<html><head/><body><p align=\"center\">%1:%2</p></body></html>").arg(minutes,2).arg(secondes,2);
-    this->setWindowTitle(QString("%3 %1:%2").arg(minutes,2).arg(secondes,2).arg(stepsNames[step]));
-    ui->clock->setText(t);
+
+    displayTime();
 }
 
 MainWindow::~MainWindow()

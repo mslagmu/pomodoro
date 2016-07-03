@@ -1,8 +1,8 @@
 #ifndef TASKSLIST_H
 #define TASKSLIST_H
 
-#include <QtGui/QListWidget>
-#include <QtGui/QWidget>
+#include <QListWidget>
+#include <QWidget>
 
 class TasksList : public QListWidget
 {

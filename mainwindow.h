@@ -21,6 +21,7 @@ public:
 protected:
     void timerEvent(QTimerEvent *event);
     void nextStep();
+    void closeEvent(QCloseEvent * event);
 
 private slots:
     void on_start_clicked();
@@ -32,6 +33,7 @@ private slots:
     void on_longTime_valueChanged(int v);
     void on_shortTime_valueChanged(int v);
     void on_cycle_valueChanged(int v);
+    void on_showPopup_stateChanged(int state);
     void on_tray_activated ( QSystemTrayIcon::ActivationReason reason );
 
 
@@ -46,6 +48,8 @@ private:
     QSystemTrayIcon tray;
     QSettings config;
     void saveConfig();
+    void setStep(int s);
+    void displayTime();
     Chrono chrono;
 
 };
