@@ -10,7 +10,7 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this,this)
+    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this)
 {
    //QResource::registerResource("resource.rcc");
 
@@ -177,9 +177,9 @@ void MainWindow::saveConfig(){
     config.setValue("longtime",ui->longTime->value());
     config.setValue("shorttime",ui->shortTime->value());
     config.setValue("cycle",ui->cycle->value());
-    config.setValue("workcolor",colorNames[WORK]);
-    config.setValue("longcolor",colorNames[LONG]);
-    config.setValue("short",colorNames[SHORT]);
+    config.setValue("workColor",colorNames[WORK]);
+    config.setValue("longColor",colorNames[LONG]);
+    config.setValue("shortColor",colorNames[SHORT]);
     config.setValue("textColor",chrono.textColor());
 }
 
