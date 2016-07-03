@@ -21,12 +21,16 @@ public:
 
     void setTime(QString t);
     void setStep(int s,QString color);
+    void setEnd(QString e);
     void set_visible(bool v);
+    void setTextColor(QString c);
+    QString textColor();
 
 private:
     Ui::Chrono *ui;
     QWidget * owner;
     bool _visible=true;
+    QString _textColor;
 };
 
 #endif // CHRONO_H

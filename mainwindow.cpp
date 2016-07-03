@@ -5,11 +5,12 @@
 #include <QCloseEvent>
 #include <QTextStream>
 #include <QColorDialog>
+#include <QTime>
 #include "constants.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this)
+    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this,this)
 {
    //QResource::registerResource("resource.rcc");
 
@@ -27,6 +28,9 @@ MainWindow::MainWindow(QWidget *parent) :
    changeColorButton(ui->shortColor,SHORT,config.value("shortColor","yellow").toString());
    changeColorButton(ui->longColor,LONG,config.value("longColor","green").toString());
 
+   chrono.setTextColor(config.value("textColor","black").toString());
+
+
    //colorName[WORK]   = config.value("shorttime",5)
 
    tray.setIcon(QIcon(":/images/logo.png"));
@@ -40,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent) :
    on_reset_clicked();
 
 
-   chrono.setGeometry(1000,0,84,30);
+   chrono.setGeometry(1000,0,84,20);
 
 }
 
@@ -52,8 +56,16 @@ void MainWindow::on_start_clicked() {
 }
 
 void MainWindow::setStep(int s) {
+    QTime now (QTime::currentTime());
     step=s;
     chrono.setStep(step,colorNames[s]);
+    QTime e = now.addSecs(stepTime[s]*60);
+    QString time;
+    QTextStream(&time) << "" << qSetFieldWidth(2) << right << qSetPadChar('0')
+                       << e.hour() << qSetFieldWidth(1) << ":" << qSetFieldWidth(2)
+                       <<  e.minute() << qSetFieldWidth(1) << ":" << qSetFieldWidth(2)
+                       << e.second();
+    chrono.setEnd(time);
 }
 
 void MainWindow::nextStep(){
@@ -113,9 +125,16 @@ void MainWindow::on_longColor_clicked() {
     QColor color = QColorDialog::getColor(Qt::white, this, "Choisir la couleur.");
     if ( ! color.isValid())  return ;
     changeColorButton(ui->longColor,LONG,color.name());
-
-
 }
+
+void MainWindow::on_textColor_clicked() {
+    QColor color = QColorDialog::getColor(Qt::white, this, "Choisir la couleur.");
+    if ( ! color.isValid())  return ;
+    //ui->textColor->setStyleSheet(QString("background-color:%1").arg(color.name()));
+    chrono.setTextColor(color.name());
+    chrono.setStep(step,colorNames[step]);
+}
+
 void MainWindow::on_tray_activated ( QSystemTrayIcon::ActivationReason reason ){
     this->setVisible(!this->isVisible());
 }
@@ -161,6 +180,7 @@ void MainWindow::saveConfig(){
     config.setValue("workcolor",colorNames[WORK]);
     config.setValue("longcolor",colorNames[LONG]);
     config.setValue("short",colorNames[SHORT]);
+    config.setValue("textColor",chrono.textColor());
 }
 
 

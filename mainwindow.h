@@ -33,6 +33,7 @@ private slots:
     void on_workColor_clicked();
     void on_shortColor_clicked();
     void on_longColor_clicked();
+    void on_textColor_clicked();
 
     void on_saveconfig_clicked();
     void on_workTime_valueChanged(int v);

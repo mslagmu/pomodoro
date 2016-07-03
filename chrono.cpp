@@ -16,8 +16,21 @@ void Chrono::set_visible(bool s){
     _visible =s;
 }
 
+void Chrono::setEnd(QString e){
+    ui->end->setText(e);
+}
+
+void Chrono::setTextColor(QString c){
+    _textColor=c;
+}
+
+QString Chrono::textColor(){
+    return _textColor;
+}
+
+
 void Chrono::setStep(int s, QString color){
-    setStyleSheet(QString("background-color: %1").arg(color));
+    setStyleSheet(QString("QWidget{background-color: %1} QLabel {color:%2}").arg(color).arg(_textColor));
     this->setVisible((s!=STOPED) && _visible);
 }
 
@@ -27,7 +40,7 @@ Chrono::Chrono(QWidget *Owner, QWidget *parent) :
     owner(Owner)
 {
     ui->setupUi(this);
-    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Dialog );
+    setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint  | Qt::Sheet);
 }
 
 Chrono::~Chrono()
