@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>573</width>
-    <height>242</height>
+    <width>516</width>
+    <height>244</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -93,14 +93,28 @@
          </layout>
         </item>
         <item>
-         <widget class="QCheckBox" name="showPopup">
-          <property name="text">
-           <string>Montrer le Popup</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QCheckBox" name="showPopup">
+            <property name="text">
+             <string>Montrer le Popup</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="soundBox">
+            <property name="text">
+             <string>Mettre le son</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -223,7 +237,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>573</width>
+     <width>516</width>
      <height>19</height>
     </rect>
    </property>

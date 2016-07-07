@@ -6,15 +6,21 @@
 #include <QTextStream>
 #include <QColorDialog>
 #include <QTime>
+#include <QSound>
 #include "constants.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this)
+    ui(new Ui::MainWindow),tray(this),config("pomodoro"),chrono(this),player(this)
 {
    //QResource::registerResource("resource.rcc");
 
    tray.setObjectName("tray");
+
+   player.setObjectName("player");
+   player.setMedia(QUrl("qrc:/sound.ogg"));
+   player.setVolume(50);
+
    ui->setupUi(this);
    stepsNames << "Inactif" << "Travail" << "Courte Pause" << "Longue Pause";
 
@@ -22,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
    ui->shortTime->setValue(config.value("shorttime",5).toInt());
    ui->longTime->setValue(config.value("longtime",15).toInt());
    ui->cycle->setValue(config.value("cycle",4).toInt());
+
+   ui->soundBox->setChecked(config.value("sound",0).toBool());
 
    colorNames[STOPED] = "white";
    changeColorButton(ui->workColor,WORK,config.value("workColor","red").toString());
@@ -87,6 +95,8 @@ void MainWindow::nextStep(){
 
     secondes = 60;
     minutes = stepTime[step]-1;
+    /*minutes = 0;
+    secondes=10;*/
     ui->step->setText(QString("<html><head/><body><p align=\"center\">%1</p></body></html>").arg(stepsNames[step]));
     //tray.showMessage("Changement",stepsNames[step]);
 
@@ -181,11 +191,13 @@ void MainWindow::saveConfig(){
     config.setValue("longColor",colorNames[LONG]);
     config.setValue("shortColor",colorNames[SHORT]);
     config.setValue("textColor",chrono.textColor());
+    config.setValue("sound",ui->soundBox->isChecked());
 }
 
 
 void MainWindow::closeEvent(QCloseEvent * event){
     chrono.hide();
+    saveConfig();
     event->accept();
 }
 
@@ -211,7 +223,10 @@ void MainWindow::timerEvent(QTimerEvent *event){
         minutes= minutes-1;
         secondes = 59;
     }
-    if (minutes ==0 && secondes==0) nextStep();
+    if (minutes ==0 && secondes==0) {
+        nextStep();
+        if ( ui->soundBox->isChecked()) player.play();
+     }
 
     displayTime();
 }

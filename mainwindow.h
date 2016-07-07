@@ -5,6 +5,7 @@
 #include <QSystemTrayIcon>
 #include <QSettings>
 #include <QPushButton>
+#include <QMediaPlayer>
 #include "chrono.h"
 
 namespace Ui {
@@ -59,6 +60,7 @@ private:
     void saveConfig();
     void setStep(int s);
     void displayTime();
+    QMediaPlayer player;
     Chrono chrono;
 
 };
