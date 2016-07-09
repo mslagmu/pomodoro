@@ -27,3 +27,5 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     resources.qrc
+
+TRANSLATIONS = pomodoro_fr_FR.ts pomodoro_C.ts

@@ -3,4 +3,7 @@
         <file>images/logo.png</file>
         <file>sound.ogg</file>
     </qresource>
+    <qresource prefix="/translation">
+        <file>pomodoro_fr_FR.qm</file>
+    </qresource>
 </RCC>

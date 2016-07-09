@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
    player.setVolume(50);
 
    ui->setupUi(this);
-   stepsNames << "Inactif" << "Travail" << "Courte Pause" << "Longue Pause";
+   stepsNames << tr("Inactiv") << tr("Work") << tr("Short Break") << tr("Long Break");
 
    ui->workTime->setValue(config.value("worktime",25).toInt());
    ui->shortTime->setValue(config.value("shorttime",5).toInt());

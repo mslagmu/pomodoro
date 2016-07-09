@@ -38,7 +38,7 @@
            </font>
           </property>
           <property name="text">
-           <string>00:00</string>
+           <string notr="true">00:00</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -53,7 +53,7 @@
            </font>
           </property>
           <property name="text">
-           <string>inactif</string>
+           <string notr="true">inactif</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -65,7 +65,7 @@
           <item>
            <widget class="QPushButton" name="start">
             <property name="text">
-             <string>Démarrer</string>
+             <string>Start</string>
             </property>
            </widget>
           </item>
@@ -86,7 +86,7 @@
           <item>
            <widget class="QPushButton" name="reset">
             <property name="text">
-             <string>RAZ</string>
+             <string>Reset</string>
             </property>
            </widget>
           </item>
@@ -97,7 +97,7 @@
           <item>
            <widget class="QCheckBox" name="showPopup">
             <property name="text">
-             <string>Montrer le Popup</string>
+             <string>Show the popup</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -107,7 +107,7 @@
           <item>
            <widget class="QCheckBox" name="soundBox">
             <property name="text">
-             <string>Mettre le son</string>
+             <string>Sound</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -120,7 +120,7 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Configuration</string>
+        <string>Set Up</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout">
         <item row="6" column="1">
@@ -136,7 +136,7 @@
         <item row="2" column="0">
          <widget class="QLabel" name="label_work">
           <property name="text">
-           <string>Temps de travail:</string>
+           <string>Work Time:</string>
           </property>
          </widget>
         </item>
@@ -153,14 +153,14 @@
         <item row="5" column="2">
          <widget class="QPushButton" name="longColor">
           <property name="text">
-           <string>choisir la couleur</string>
+           <string>choose the color</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Temps de pause courte:</string>
+           <string>Duration of a short break:</string>
           </property>
          </widget>
         </item>
@@ -177,7 +177,7 @@
         <item row="2" column="2">
          <widget class="QPushButton" name="workColor">
           <property name="text">
-           <string>choisir la couleur</string>
+           <string>choose the color</string>
           </property>
          </widget>
         </item>
@@ -194,35 +194,35 @@
         <item row="3" column="2">
          <widget class="QPushButton" name="shortColor">
           <property name="text">
-           <string>choisir la couleur</string>
+           <string>choose the color</string>
           </property>
          </widget>
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string>Nombre de cycle pour une longue pause</string>
+           <string>Number of cycles</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Temps de pause longue:</string>
+           <string>Duration of a long break:</string>
           </property>
          </widget>
         </item>
         <item row="7" column="0">
          <widget class="QPushButton" name="saveconfig">
           <property name="text">
-           <string>Sauver la configuration</string>
+           <string>Save the setup</string>
           </property>
          </widget>
         </item>
         <item row="7" column="1">
          <widget class="QPushButton" name="textColor">
           <property name="text">
-           <string>Couleur du texte</string>
+           <string>Text Color</string>
           </property>
          </widget>
         </item>
